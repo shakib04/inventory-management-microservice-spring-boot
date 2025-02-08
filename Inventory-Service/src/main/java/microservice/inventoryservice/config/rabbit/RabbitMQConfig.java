@@ -1,4 +1,4 @@
-package microservice.inventoryservice.config;
+package microservice.inventoryservice.config.rabbit;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Binding;

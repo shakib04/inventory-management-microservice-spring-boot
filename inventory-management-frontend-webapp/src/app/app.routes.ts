@@ -18,7 +18,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        loadChildren: () => import('./views/dashboard/routes').then((m) => m.routes),
+        loadChildren: () => import('./views/dashboard-v2/routes').then((m) => m.routes),
         canActivate: [AuthGuard, RoleGuard],
         data: {role: ['ROLE_USER']}
       },

@@ -1,0 +1,24 @@
+/* dashboard.component.scss */
+:host {
+  display: block;
+  padding: 1.5rem;
+
+  .card {
+    height: 100%;
+
+    &:hover {
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+      transition: box-shadow 0.3s ease-in-out;
+    }
+  }
+
+  .progress {
+    height: 0.5rem;
+  }
+
+  .card-body {
+    .table {
+      margin-bottom: 0;
+    }
+  }
+}
