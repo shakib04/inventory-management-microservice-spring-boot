@@ -5,8 +5,6 @@ import {Router} from '@angular/router';
 import {ButtonModule, CardModule, FormModule, GridModule, SpinnerModule, TableModule} from '@coreui/angular';
 import {ProductService} from "../../services/product.service";
 import {OrderService} from "../../services/order.service";
-import {Product} from "../../models/product.model";
-import {Page} from "../../models/page.model";
 import {OrderRequest} from "../../models/order.model";
 
 
