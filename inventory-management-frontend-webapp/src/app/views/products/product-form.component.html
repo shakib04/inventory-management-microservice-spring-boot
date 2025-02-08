@@ -1,0 +1,89 @@
+<c-card>
+  <c-card-header>
+    <strong>{{ isEditMode ? 'Edit' : 'Create' }} Product</strong>
+  </c-card-header>
+  <c-card-body>
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <c-row class="mb-3">
+        <c-col [md]="6">
+          <label cLabel for="sku">SKU</label>
+          <input cFormControl id="sku" formControlName="sku"
+                 [valid]="isFieldValid('sku')"/>
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('sku')">
+            SKU is required
+          </div>
+        </c-col>
+
+        <c-col [md]="6">
+          <label cLabel for="name">Name</label>
+          <input cFormControl id="name" formControlName="name"
+                 [valid]="isFieldValid('name')"/>
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('name')">
+            Name is required
+          </div>
+        </c-col>
+      </c-row>
+
+      <c-row class="mb-3">
+        <c-col [md]="12">
+          <label cLabel for="description">Description</label>
+          <textarea cFormControl id="description" formControlName="description"
+                    rows="3" [valid]="isFieldValid('description')"></textarea>
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('description')">
+            Description is required
+          </div>
+        </c-col>
+      </c-row>
+
+      <c-row class="mb-3">
+        <c-col [md]="6">
+          <label cLabel for="category">Category</label>
+          <input cFormControl id="category" formControlName="category"
+                 [valid]="isFieldValid('category')"/>
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('category')">
+            Category is required
+          </div>
+        </c-col>
+
+        <c-col [md]="6">
+          <label cLabel for="unitPrice">Unit Price</label>
+          <input cFormControl id="unitPrice" type="number" formControlName="unitPrice"
+                 [valid]="isFieldValid('unitPrice')"/>
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('unitPrice')">
+            Valid unit price is required
+          </div>
+        </c-col>
+      </c-row>
+
+      <c-row class="mb-3">
+        <c-col [md]="6">
+          <label cLabel for="minimumStock">Minimum Stock</label>
+          <input cFormControl id="minimumStock" type="number" formControlName="minimumStock"
+                 [valid]="isFieldValid('minimumStock')"/>
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('minimumStock')">
+            Valid minimum stock is required
+          </div>
+        </c-col>
+
+        <c-col [md]="6">
+          <label cLabel for="currentStock">Current Stock</label>
+          <input cFormControl id="currentStock" type="number" formControlName="currentStock"
+                 [valid]="isFieldValid('currentStock')"/>
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('currentStock')">
+            Valid current stock is required
+          </div>
+        </c-col>
+      </c-row>
+
+      <div class="d-flex justify-content-end gap-2">
+        <button cButton color="secondary" type="button" (click)="onCancel()">
+          Cancel
+        </button>
+        <button cButton color="primary" type="submit" [disabled]="!productForm.valid || loading">
+          <c-spinner *ngIf="loading" size="sm" class="me-1"></c-spinner>
+          {{ isEditMode ? 'Update' : 'Create' }} Product
+        </button>
+      </div>
+    </form>
+  </c-card-body>
+</c-card>

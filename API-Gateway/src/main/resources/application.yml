@@ -1,0 +1,107 @@
+server:
+  port: 8080
+
+services:
+  product:
+    context-path: product-service
+  user:
+    context-path: user-service
+
+app:
+  config:
+    keycloak:
+      url: http://localhost:8571/
+      realm: banking-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+spring:
+  application:
+    name: api-gateway
+  profiles:
+    active: swagger
+
+  cloud:
+    gateway:
+      routes:
+        #        - id: openapi-docs
+        #          uri: lb://USER-SERVICE
+        #          predicates:
+        #              - Path=/v3/api-docs/**
+        #          filters:
+        #              - RewritePath=/user-service/(?<segment>.*), /${segment}
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/auth/**,/${services.user.context-path}/**
+          filters:
+            - AuthFilter
+        #            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/${services.product.context-path}/**
+          filters:
+#            - AuthFilter
+#            - RewritePath=/${services.product.context-path}/(?<segment>.*), /$\{segment}
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/orders/**
+        - id: account-service
+          uri: lb://account-service
+          predicates:
+            - Path=/accounts/**
+        - id: sequence-generator
+          uri: lb://sequence-generator
+          predicates:
+            - Path=/sequence/**
+        - id: transaction-service
+          uri: lb://transaction-service
+          predicates:
+            - Path=/transactions/**
+        - id: fund-transfer-service
+          uri: lb://fund-transfer-service
+          predicates:
+            - Path=/fund-transfers/**
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: [ GET, POST, PUT, DELETE, OPTIONS ]
+            allowedHeaders: [ Content-Type, X-Requested-With, Accept, Origin, Authorization, X-XSRF-TOKEN ]
+  #            allowCredentials: true
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            token-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/token
+            authorization-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/auth
+            user-name-attribute: preferred_username
+            user-info-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/userinfo
+            jwk-set-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/certs
+            user-info-authentication-method: header
+        registration:
+          banking-service-client:
+            provider: keycloak
+            client-id: banking-service-client
+            client-secret: Au6eAD2JgB5MH0G2tNrPLfKqObswfSPb
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8571/login/oauth2/code/keycloak
+            scope: openid
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${app.config.keycloak.url}/realms/${app.config.keycloak.realm}/protocol/openid-connect/certs
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - url: /${services.user.context-path}/api-docs
+        name: User Service
+      - url: /${services.product.context-path}/api-docs
+        name: Product Service

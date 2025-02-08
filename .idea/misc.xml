@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/demo" />
+    <file type="web" url="file://$PROJECT_DIR$/Product-Service" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/API-Gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/User-Service/pom.xml" />
+        <option value="$PROJECT_DIR$/Fund-Transfer/pom.xml" />
+        <option value="$PROJECT_DIR$/Account-Service/pom.xml" />
+        <option value="$PROJECT_DIR$/Service-Registry/pom.xml" />
+        <option value="$PROJECT_DIR$/Sequence-Generator/pom.xml" />
+        <option value="$PROJECT_DIR$/Transaction-Service/pom.xml" />
+        <option value="$PROJECT_DIR$/Product-Service/pom.xml" />
+        <option value="$PROJECT_DIR$/Order-Service/pom.xml" />
+        <option value="$PROJECT_DIR$/Inventory-Service/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/Account-Service/pom.xml" />
+        <option value="$PROJECT_DIR$/Fund-Transfer/pom.xml" />
+        <option value="$PROJECT_DIR$/Transaction-Service/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="corretto-17" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

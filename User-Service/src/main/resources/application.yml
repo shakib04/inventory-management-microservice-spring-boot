@@ -1,0 +1,36 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /user-service
+
+spring:
+  profiles:
+    active: auth, swagger
+  application:
+    name: user-service
+    bad_request: 400
+    conflict: 409
+    success: 200
+    not_found: 404
+
+  datasource:
+    url: jdbc:postgresql://${POSTGRESQL_HOST:localhost}:${POSTGRESQL_PORT:5432}/${POSTGRESQL_DB_NAME:user_service}
+    username: ${POSTGRESQL_USER:postgres}
+    password: ${POSTGRESQL_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+
+app:
+  config:
+    keycloak:
+      server-url: http://localhost:8571
+      realm: banking-service
+      client-id: banking-service-api-client
+      client-secret: TRENb8zznl26E94qVk8cp7D25Oo1IASI
+

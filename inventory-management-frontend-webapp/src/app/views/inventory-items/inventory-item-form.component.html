@@ -1,0 +1,67 @@
+<c-card>
+  <c-card-header>
+    <strong>{{ isEditMode ? 'Edit' : 'Create' }} Inventory Item</strong>
+  </c-card-header>
+  <c-card-body>
+    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+      <c-row class="mb-3">
+        <c-col [md]="6">
+          <label cLabel for="productId">Product ID</label>
+          <input cFormControl id="productId" formControlName="productId"
+                 [valid]="isFieldValid('productId')"/>
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('productId')">
+            Product ID is required
+          </div>
+        </c-col>
+
+        <c-col [md]="6">
+          <label cLabel for="warehouseId">Warehouse ID</label>
+          <input cFormControl id="warehouseId" formControlName="warehouseId"
+                 [valid]="isFieldValid('warehouseId')"/>
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('warehouseId')">
+            Warehouse ID is required
+          </div>
+        </c-col>
+      </c-row>
+
+      <c-row class="mb-3">
+        <c-col [md]="4">
+          <label cLabel for="quantity">Quantity</label>
+          <input cFormControl id="quantity" type="number" formControlName="quantity"
+                 [valid]="isFieldValid('quantity')"/>
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('quantity')">
+            Valid quantity is required
+          </div>
+        </c-col>
+
+        <c-col [md]="4">
+          <label cLabel for="reorderLevel">Reorder Level</label>
+          <input cFormControl id="reorderLevel" type="number" formControlName="reorderLevel"
+                 [valid]="isFieldValid('reorderLevel')"/>
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('reorderLevel')">
+            Valid reorder level is required
+          </div>
+        </c-col>
+
+        <c-col [md]="4">
+          <label cLabel for="reorderQuantity">Reorder Quantity</label>
+          <input cFormControl id="reorderQuantity" type="number" formControlName="reorderQuantity"
+                 [valid]="isFieldValid('reorderQuantity')"/>
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('reorderQuantity')">
+            Valid reorder quantity is required
+          </div>
+        </c-col>
+      </c-row>
+
+      <div class="d-flex justify-content-end gap-2">
+        <button cButton color="secondary" type="button" (click)="onCancel()">
+          Cancel
+        </button>
+        <button cButton color="primary" type="submit" [disabled]="!itemForm.valid || loading">
+          <c-spinner *ngIf="loading" size="sm" class="me-1"></c-spinner>
+          {{ isEditMode ? 'Update' : 'Create' }} Item
+        </button>
+      </div>
+    </form>
+  </c-card-body>
+</c-card>

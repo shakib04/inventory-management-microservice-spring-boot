@@ -1,0 +1,120 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Add this
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - app-network
+
+  service-registry:
+    build: ./Service-Registry
+    ports:
+      - "8761:8761"
+    networks:
+      - app-network
+
+  api-gateway:
+    build: ./API-Gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - service-registry
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registry:8761/eureka/
+    networks:
+      - app-network
+
+  user-service:
+    build: ./User-Service
+    depends_on:
+      postgres:
+        condition: service_healthy
+      service-registry:
+          condition: service_started
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/user_service
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registry:8761/eureka/
+    networks:
+      - app-network
+
+  product-service:
+    build: ./Product-Service
+    depends_on:
+      - postgres
+      - service-registry
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/product_service
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registry:8761/eureka/
+    networks:
+      - app-network
+
+  inventory-service:
+    build: ./Inventory-Service
+    depends_on:
+      - postgres
+      - service-registry
+      - rabbitmq
+      - redis
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/inventory_service
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registry:8761/eureka/
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_REDIS_HOST: redis
+    networks:
+      - app-network
+
+  order-service:
+    build: ./Order-Service
+    depends_on:
+      - postgres
+      - service-registry
+      - rabbitmq
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/order_service
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://service-registry:8761/eureka/
+      SPRING_RABBITMQ_HOST: rabbitmq
+    networks:
+      - app-network
+
+  frontend:
+    build: ./inventory-management-frontend-webapp
+    ports:
+      - "4200:80"
+    depends_on:
+      - api-gateway
+    networks:
+      - app-network
+
+networks:
+  app-network:
+
+volumes:
+  postgres_data:

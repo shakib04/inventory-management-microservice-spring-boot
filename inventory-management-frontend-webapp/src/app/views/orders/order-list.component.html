@@ -1,0 +1,90 @@
+<c-row>
+  <c-col [lg]="12">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4 class="mb-0">Orders</h4>
+      <button cButton color="primary" (click)="createOrder()">
+        <svg cIcon name="cilPlus" size="sm" class="me-1"></svg>
+        New Order
+      </button>
+    </div>
+  </c-col>
+</c-row>
+
+<c-row *ngIf="loading">
+  <c-col>
+    <div class="text-center p-5">
+      <c-spinner></c-spinner>
+    </div>
+  </c-col>
+</c-row>
+
+<c-row *ngIf="!loading">
+  <c-col *ngFor="let order of orders" [lg]="6" class="mb-4">
+    <c-card>
+      <c-card-header class="d-flex justify-content-between align-items-center">
+        <div>
+          <strong>Order #{{ order.orderNumber }}</strong>
+          <c-badge [color]="getStatusColor(order.status)" class="ms-2">
+            {{ order.status }}
+          </c-badge>
+        </div>
+        <div class="btn-group">
+          <button cButton color="primary" size="sm" (click)="editOrder(order)">
+            <svg cIcon name="cilPencil" size="sm"></svg>
+          </button>
+          <button cButton color="danger" size="sm" (click)="deleteOrder(order)">
+            <svg cIcon name="cilTrash" size="sm"></svg>
+          </button>
+        </div>
+      </c-card-header>
+
+      <c-card-body>
+        <h5 class="text-muted mb-3">Items</h5>
+        <div class="list-group mb-3">
+          <div class="list-group-item" *ngFor="let item of order.items">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <div class="fw-bold">{{ item.productName }}</div>
+                <small class="text-muted">
+                  Qty: {{ item.quantity }} x {{ item.unitPrice | currency }}
+                </small>
+              </div>
+              <div class="text-end">
+                <div>{{ item.quantity * item.unitPrice | currency }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </c-card-body>
+
+      <c-card-footer>
+        <div class="d-flex justify-content-between align-items-center">
+          <strong>Total Amount</strong>
+          <h4 class="mb-0">{{ order.totalAmount | currency }}</h4>
+        </div>
+      </c-card-footer>
+    </c-card>
+  </c-col>
+</c-row>
+
+<c-row *ngIf="!loading && orders.length === 0">
+  <c-col>
+    <c-card>
+      <c-card-body class="text-center p-5">
+        <h4>No Orders Found</h4>
+        <p class="text-muted">Start by creating a new order</p>
+        <button cButton color="primary" (click)="createOrder()">
+          Create Order
+        </button>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
+
+<c-row *ngIf="!loading && totalPages > 1">
+  <c-col>
+    <c-pagination
+      class="justify-content-center mt-3"
+    ></c-pagination>
+  </c-col>
+</c-row>

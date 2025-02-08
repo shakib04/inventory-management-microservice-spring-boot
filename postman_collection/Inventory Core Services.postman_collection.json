@@ -1,0 +1,1014 @@
+{
+	"info": {
+		"_postman_id": "f83a0ddd-2835-4803-a871-0733e8d06bd7",
+		"name": "Inventory Core Services",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15094096"
+	},
+	"item": [
+		{
+			"name": "API Gateway",
+			"item": [
+				{
+					"name": "User Service",
+					"item": [
+						{
+							"name": "auth",
+							"item": [
+								{
+									"name": "register",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"testuser\",\n    \"password\": \"password123\"\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/user-service/api/auth/register",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"user-service",
+												"api",
+												"auth",
+												"register"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "authenticate",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"testuser\",\n    \"password\": \"password123\"\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/user-service/api/auth/authenticate",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"user-service",
+												"api",
+												"auth",
+												"authenticate"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "create a user",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwic3ViIjoidGVzdHVzZXIiLCJpYXQiOjE3Mzg2MDg4OTcsImV4cCI6MTczODY5NTI5N30.B_3xWYjDQUyzAviEWqO9wjUqvdgX_f0HjFJlGInucPWieOQX4a72nC97vy-H2grL-wctLppvWjVzRiyZ0Z39bQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\" : \"Adam\",\r\n    \"lastName\" : \"Sanadi\",\r\n    \"emailId\" : \"adamsanadi1234@gmail.com\",\r\n    \"contactNumber\" : \"8547159267\",\r\n    \"password\" : \"Adam@1234\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/users/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read all users",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwic3ViIjoidGVzdHVzZXIiLCJpYXQiOjE3MzgzMDY2MzAsImV4cCI6MTczODM5MzAzMH0.Z6TxQTH7K8dk--dBUafi5QAWeAHCHQjVEWH8bxldFy7A_87-PF2o9ZmCIlVEPQ0VMLASqwDfwK2Nf-G9Jq_QPw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url_user}}/api/users",
+									"host": [
+										"{{base_url_user}}"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update user status",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"status\" : \"APPROVED\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/users/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read user by Id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwic3ViIjoidGVzdHVzZXIyIiwiaWF0IjoxNzM4MzA2NjMwLCJleHAiOjE3MzgzOTMwMzB9.mINlzPpFPY-2Wbm15Rcu6InFE92l60h949msBwt4e3iXthzqb7E2gc4NN6Bg6DVafoZL5oSTo6WXBca_iFcKUw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url_user}}/api/users/1",
+									"host": [
+										"{{base_url_user}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update user",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\" : \"Kishan\",\r\n    \"lastName\" : \"Kulkarni\",\r\n    \"contactNo\" : \"9562148579\",\r\n    \"address\" : \"Behind Prasad Lodge, Extension Masari\",\r\n    \"gender\" : \"Male\",\r\n    \"occupation\" : \"Student\",\r\n    \"martialStatus\" : \"Single\",\r\n    \"nationality\" : \"Indian\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/users/2",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read user by account id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url_user}}/api/users/accounts/0600140000005",
+									"host": [
+										"{{base_url_user}}"
+									],
+									"path": [
+										"api",
+										"users",
+										"accounts",
+										"0600140000005"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sequence Generator",
+					"item": [
+						{
+							"name": "generate account number",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/sequence",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"sequence"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Product Service",
+					"item": [
+						{
+							"name": "product",
+							"item": [
+								{
+									"name": "create",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"sku\": \"PROD-002\",\n    \"name\": \"Laptop\",\n    \"description\": \"Dell XPS 13\",\n    \"category\": \"Electronics\",\n    \"unitPrice\": 999.99,\n    \"minimumStock\": 10\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/api/products",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"api",
+												"products"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "get",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwic3ViIjoidGVzdHVzZXIiLCJpYXQiOjE3Mzg2MDg4OTcsImV4cCI6MTczODY5NTI5N30.B_3xWYjDQUyzAviEWqO9wjUqvdgX_f0HjFJlGInucPWieOQX4a72nC97vy-H2grL-wctLppvWjVzRiyZ0Z39bQ",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/api/products/:id",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"api",
+												"products",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "8d55563f-7320-4952-ae70-c257ffe742ef"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "update",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"quantity\": 50,\n    \"warehouseId\": \"WH-001\"\n}"
+										},
+										"url": {
+											"raw": "{{base_url_product_service}}/api/products/123e4567-e89b-12d3-a456-426614174000/stock",
+											"host": [
+												"{{base_url_product_service}}"
+											],
+											"path": [
+												"api",
+												"products",
+												"123e4567-e89b-12d3-a456-426614174000",
+												"stock"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "availability",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url_product_service}}/api/products/123e4567-e89b-12d3-a456-426614174000/availability?quantity=5",
+											"host": [
+												"{{base_url_product_service}}"
+											],
+											"path": [
+												"api",
+												"products",
+												"123e4567-e89b-12d3-a456-426614174000",
+												"availability"
+											],
+											"query": [
+												{
+													"key": "quantity",
+													"value": "5"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Stock (Add)",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"quantity\": 10,\n    \"warehouseId\": \"WH-001\",\n    \"updateType\": \"ADD\"\n}"
+										},
+										"url": {
+											"raw": "{{base_url_product_service}}/api/products/123/stock",
+											"host": [
+												"{{base_url_product_service}}"
+											],
+											"path": [
+												"api",
+												"products",
+												"123",
+												"stock"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Stock (Subtract)",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"quantity\": 5,\n    \"warehouseId\": \"WH-001\",\n    \"updateType\": \"SUBTRACT\"\n}"
+										},
+										"url": {
+											"raw": "{{base_url_product_service}}/api/products/123/stock",
+											"host": [
+												"{{base_url_product_service}}"
+											],
+											"path": [
+												"api",
+												"products",
+												"123",
+												"stock"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Check Availability",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url_product_service}}/api/products/123/availability?quantity=3",
+											"host": [
+												"{{base_url_product_service}}"
+											],
+											"path": [
+												"api",
+												"products",
+												"123",
+												"availability"
+											],
+											"query": [
+												{
+													"key": "quantity",
+													"value": "3"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Order Service",
+					"item": [
+						{
+							"name": "order",
+							"item": [
+								{
+									"name": "Create Order",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"customerId\": \"cust123\",\n    \"items\": [\n        {\n            \"productId\": \"b4614ccd-42fe-4755-99a7-3b5c1908a198\",\n            \"quantity\": 2\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/api/orders",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"api",
+												"orders"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Order",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url_order_service}}/api/orders/order123",
+											"host": [
+												"{{base_url_order_service}}"
+											],
+											"path": [
+												"api",
+												"orders",
+												"order123"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Customer Orders",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8082/api/orders/customer/cust123",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8082",
+											"path": [
+												"api",
+												"orders",
+												"customer",
+												"cust123"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Cancel Order",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{base_url_order_service}}/api/orders/order123/cancel",
+											"host": [
+												"{{base_url_order_service}}"
+											],
+											"path": [
+												"api",
+												"orders",
+												"order123",
+												"cancel"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Order Status",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{base_url_order_service}}/api/orders/order123/status?status=SHIPPED",
+											"host": [
+												"{{base_url_order_service}}"
+											],
+											"path": [
+												"api",
+												"orders",
+												"order123",
+												"status"
+											],
+											"query": [
+												{
+													"key": "status",
+													"value": "SHIPPED"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Inventory Service",
+					"item": [
+						{
+							"name": "inventory",
+							"item": [
+								{
+									"name": "Record stock movement",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"productId\": \"prod123\",\n    \"warehouseId\": \"WH-001\",\n    \"quantity\": 100,\n    \"type\": \"STOCK_IN\",\n    \"referenceId\": \"PO-001\",\n    \"notes\": \"Initial stock receipt\"\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8083/api/inventory/movement",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8083",
+											"path": [
+												"api",
+												"inventory",
+												"movement"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get product inventory",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8083/api/inventory/product/prod123",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8083",
+											"path": [
+												"api",
+												"inventory",
+												"product",
+												"prod123"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get warehouse inventory",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8083/api/inventory/warehouse/WH-001/products",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8083",
+											"path": [
+												"api",
+												"inventory",
+												"warehouse",
+												"WH-001",
+												"products"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Check reorder needs",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8083/api/inventory/reorder-check",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8083",
+											"path": [
+												"api",
+												"inventory",
+												"reorder-check"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "inventory-item",
+							"item": [
+								{
+									"name": "Create Inventory Item",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer YOUR_JWT_TOKEN"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n   \"productId\": \"prod-123\",\n   \"productName\": \"Laptop\",\n   \"warehouseId\": \"wh-001\",\n   \"quantity\": 100,\n   \"reorderLevel\": 10,\n   \"reorderQuantity\": 50\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/inventory-items",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"inventory-items"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Inventory Item",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer YOUR_JWT_TOKEN"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:8080/api/inventory-items/123",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"inventory-items",
+												"123"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get All Inventory Items",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer YOUR_JWT_TOKEN"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:8080/api/inventory-items",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"inventory-items"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Inventory Item",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer YOUR_JWT_TOKEN"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n   \"productId\": \"prod-123\",\n   \"productName\": \"Updated Laptop\",\n   \"quantity\": 150,\n   \"reorderLevel\": 20\n}"
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/inventory-items/123",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"inventory-items",
+												"123"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Inventory Item",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer YOUR_JWT_TOKEN"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:8080/api/inventory-items/123",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"inventory-items",
+												"123"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "oauth2",
+				"oauth2": [
+					{
+						"key": "clientSecret",
+						"value": "Au6eAD2JgB5MH0G2tNrPLfKqObswfSPb",
+						"type": "string"
+					},
+					{
+						"key": "password",
+						"value": "{{keycloak_client_password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{keycloak_client_username}}",
+						"type": "string"
+					},
+					{
+						"key": "grant_type",
+						"value": "password_credentials",
+						"type": "string"
+					},
+					{
+						"key": "scope",
+						"value": "openid offline_access",
+						"type": "string"
+					},
+					{
+						"key": "clientId",
+						"value": "banking-service-client",
+						"type": "string"
+					},
+					{
+						"key": "accessTokenUrl",
+						"value": "http://localhost:8571/realms/banking-service/protocol/openid-connect/token",
+						"type": "string"
+					},
+					{
+						"key": "tokenName",
+						"value": "token",
+						"type": "string"
+					},
+					{
+						"key": "addTokenTo",
+						"value": "header",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "keycloak_host",
+			"value": "http://localhost:8571"
+		},
+		{
+			"key": "keycloak_client_id",
+			"value": "banking-service-client"
+		},
+		{
+			"key": "keycloak_client_secret",
+			"value": "qqoSqqmLMHhcx9L3QjfBI1vxDDFugmct"
+		},
+		{
+			"key": "keycloak_client_username",
+			"value": "super-user"
+		},
+		{
+			"key": "keycloak_client_password",
+			"value": "Ka3k@1411"
+		},
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "base_url_accounting",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "base_url_user",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "base_url_product_service",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "base_url_order_service",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

@@ -1,0 +1,127 @@
+<form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+  <c-card class="mb-4">
+    <c-card-header>
+      <strong>Create New Order</strong>
+    </c-card-header>
+    <c-card-body>
+      <c-row class="mb-3">
+        <c-col [md]="6">
+          <label cLabel for="customerId">Customer ID</label>
+          <input cFormControl
+                 id="customerId"
+                 formControlName="customerId"
+                 [valid]="isFieldValid('customerId')"
+          />
+          <div class="invalid-feedback" *ngIf="isFieldInvalid('customerId')">
+            Customer ID is required
+          </div>
+        </c-col>
+      </c-row>
+    </c-card-body>
+  </c-card>
+
+  <!-- Order Items -->
+  <c-card class="mb-4">
+    <c-card-header>
+      <strong>Order Items</strong>
+      <button cButton
+              color="primary"
+              size="sm"
+              class="float-end"
+              type="button"
+              (click)="addOrderItem()"
+      >
+        Add Item
+      </button>
+    </c-card-header>
+    <c-card-body>
+      <div formArrayName="items">
+        <table cTable>
+          <thead>
+          <tr>
+            <th>Product</th>
+            <th style="width: 150px">Quantity</th>
+            <th style="width: 150px">Unit Price</th>
+            <th style="width: 150px">Total</th>
+            <th style="width: 100px">Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of orderItems.controls; let i=index"
+              [formGroupName]="i">
+            <td>
+              <select cSelect
+                      formControlName="productId"
+                      (change)="onProductSelect($event, i)"
+              >
+                <option value="">Select Product</option>
+                <option *ngFor="let product of products"
+                        [value]="product.id"
+                >
+                  {{ product.name }}
+                </option>
+              </select>
+            </td>
+            <td>
+              <input cFormControl
+                     type="number"
+                     formControlName="quantity"
+                     min="1"
+                     (input)="updateItemTotal(i)"
+              />
+            </td>
+            <td>
+              {{ getProductPrice(item.get('productId')?.value) | currency }}
+            </td>
+            <td>
+              {{ calculateItemTotal(i) | currency }}
+            </td>
+            <td>
+              <button cButton
+                      color="danger"
+                      size="sm"
+                      type="button"
+                      (click)="removeOrderItem(i)"
+              >
+                Remove
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="orderItems.length === 0">
+            <td colspan="5" class="text-center p-3">
+              No items added yet
+            </td>
+          </tr>
+          </tbody>
+          <tfoot *ngIf="orderItems.length > 0">
+          <tr>
+            <td colspan="3" class="text-end">
+              <strong>Order Total:</strong>
+            </td>
+            <td>{{ calculateOrderTotal() | currency }}</td>
+            <td></td>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+    </c-card-body>
+  </c-card>
+
+  <div class="d-flex justify-content-end gap-2">
+    <button cButton
+            color="secondary"
+            type="button"
+            (click)="onCancel()"
+    >
+      Cancel
+    </button>
+    <button cButton
+            color="primary"
+            type="submit"
+            [disabled]="!orderForm.valid || loading || orderItems.length === 0"
+    >
+      <c-spinner *ngIf="loading" size="sm" class="me-1"></c-spinner>
+      Create Order
+    </button>
+  </div>
+</form>
